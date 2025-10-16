@@ -44,6 +44,18 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'societe' => [
+            'driver' => 'session',
+            'provider' => 'societes',
+        ],
+        'demandeur' => [
+            'driver' => 'session',
+            'provider' => 'demandeurs',
+        ],
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
+        ],
     ],
 
     /*
@@ -71,6 +83,18 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Admin::class),
+        ],
+        'societes' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Societe::class),
+        ],
+        'demandeurs' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Demandeur::class),
+        ],
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Agent::class),
         ],
 
         // 'users' => [

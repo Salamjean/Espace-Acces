@@ -3,7 +3,7 @@
     <div class="topbar d-flex align-items-center" style="background-color: #193561">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="d-none d-md-flex align-items-center">
-          <i class="bi bi-clock me-1"></i> Lundi - Vendredi, 8H30 à 16H
+          <i class="bi bi-clock me-1"></i> Lundi - Vendredi, 8H00 à 17H30
         </div>
         <div class="d-flex align-items-center">
           <i class="bi bi-phone me-1"></i> Appelez-nous +225 07 11 11 79 79
@@ -14,7 +14,7 @@
     <div class="branding d-flex align-items-center">
 
       <div class="container position-relative d-flex align-items-center justify-content-end">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <a href="/" class="logo d-flex align-items-center me-auto">
           <img src="{{asset('assets/assets/img/kks.jpg')}}" alt="">
           <!-- Uncomment the line below if you also wish to use a text logo -->
           <!-- <h1 class="sitename">Medicio</h1>  -->
@@ -49,7 +49,7 @@
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn" href="{{route('demandes.create')}}">Faire une demande d’accès</a>
+        <a class="cta-btn" href="{{route('pages.access')}}">Faire une demande d’accès</a>
 
       </div>
 

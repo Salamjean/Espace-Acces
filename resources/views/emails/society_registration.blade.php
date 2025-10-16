@@ -12,8 +12,8 @@
         </tr>
         <tr>
             <td>
-                <h1>La DHL à été enregistré avec succès pour les livraisons</h1>
-                <p>Votre compte a été créé avec succès sur la plateforme.</p>
+                <h1>KKS-Techologies a enregistré votre société</h1>
+                <p>Votre société pour effectuer des demandes d'accès au DATA-CENTER.</p>
                 <p>Cliquez sur le bouton ci-dessous pour valider votre compte.</p>
                 <p>Saisissez le code <strong>{{ $code }}</strong> dans le formulaire qui apparaîtra.</p>
                 <p><a href="{{ url('/validate-society-account/' . $email) }}" style="background-color:#193561; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; cursor: pointer;">Valider mon compte</a></p>

@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->id();
-            $table->string('societe');
-            $table->string('contact_societe');
-            $table->string('email_societe');
-            $table->string('adresse_societe')->nullable();
             $table->string('name_demandeur');
             $table->string('prenom_demandeur');
             $table->string('contact_demandeur');
@@ -24,6 +20,7 @@ return new class extends Migration
             $table->string('fonction_demandeur')->nullable();
             $table->integer('nbre_perso');
             $table->date('date_visite');
+            $table->date('date_fin_visite');
             $table->time('heure_visite');
             $table->time('heure_fin_visite')->nullable();
             $table->string('motif_visite');
@@ -38,6 +35,12 @@ return new class extends Migration
             $table->boolean('is_read')->default(false);
             $table->text('user_agent')->nullable();
             $table->json('documents_joints')->nullable(); 
+            $table->foreignId('demandeur_id')->nullable()->constrained('demandeurs')->onDelete('set null');
+
+            $table->string('type_intervention')->nullable();
+            $table->string('marque_voiture')->nullable();
+            $table->string('modele_voiture')->nullable();
+            $table->string('immatriculation_voiture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

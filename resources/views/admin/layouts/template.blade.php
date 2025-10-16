@@ -18,7 +18,7 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{{asset('assetsPoster/assets/css/demo/style.css')}}">
   <!-- End layout styles -->
-   <link rel="shortcut icon" href="{{asset('assets/assets/img/logo plateau.png')}}" />
+   <link rel="shortcut icon" href="{{asset('assets/assets/img/kks.jpg')}}" />
 </head>
 <body>
 <script src="{{asset('assetsPoster/assets/js/preloader.js')}}"></script>

@@ -22,4 +22,8 @@ class HomeController extends Controller
     public function service(){
         return view('home.pages.service');
     }
+
+    public function access(){
+        return view('home.pages.access');
+    }
 }
