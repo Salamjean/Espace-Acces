@@ -333,6 +333,21 @@ $('#manualCodeInput').keypress(function(e) {
     }
 });
 
+$(document).ready(function() {
+    // Mettre le focus sur le champ d'entrée manuelle
+    $('#manualCodeInput').focus();
+
+    // Sélectionner le texte quand le champ est focalisé
+    $('#manualCodeInput').on('focus', function() {
+        $(this).select();
+    });
+
+    // Remettre le focus sur le champ si l'utilisateur clique ailleurs
+    $('#manualCodeInput').on('blur', function() {
+        $(this).focus();
+    });
+});
+
 // Valider le code de sortie
 function validateSortieCode(codeAcces) {
     $('#qr-reader-results').html(`

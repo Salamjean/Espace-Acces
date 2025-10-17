@@ -19,7 +19,11 @@ use App\Http\Controllers\Demandeur\DemandeurControlleur;
 use App\Http\Controllers\Demandeur\DemandeurDashboard;
 use App\Http\Controllers\Demandeur\DemandeurPages;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Personal\AllVisiteController;
+use App\Http\Controllers\Personal\CarteAccesController;
+use App\Http\Controllers\Personal\PersonalAuthenticate;
 use App\Http\Controllers\Personal\PersonalController;
+use App\Http\Controllers\Personal\PersonalDashboard;
 use App\Http\Controllers\Societe\SocieteAuthenticate;
 use App\Http\Controllers\Societe\SocieteController;
 use App\Http\Controllers\Societe\SocieteDashboard;
@@ -145,6 +149,21 @@ Route::middleware('demandeur')->prefix('claimant')->group(function () {
     });
 });
 
+//Les routes de gestion des @personalpermanent
+Route::prefix('personal')->group(function(){
+    Route::get('/login', [PersonalAuthenticate::class, 'login'])->name('personal.login');
+    Route::post('/login', [PersonalAuthenticate::class, 'handleLogin'])->name('personal.handleLogin');
+});
+
+Route::middleware('personal')->prefix('personal')->group(function(){
+    Route::get('/dashboard', [PersonalDashboard::class, 'dashboard'])->name('personal.dashboard');
+    Route::get('/logout', [PersonalDashboard::class, 'logout'])->name('personal.logout');
+
+    //La route de la carte d'accès du personnel permanent 
+    Route::get('/my-card', [CarteAccesController::class, 'showMyCard'])->name('show-card');
+    Route::get('/download-my-card', [CarteAccesController::class, 'downloadMyCard'])->name('download-card');
+});
+
 //Les routes de gestion des @agents
 Route::prefix('agent')->group(function() {
     Route::get('/login', [AuthenticateAgent::class, 'login'])->name('agent.login');
@@ -215,3 +234,5 @@ Route::get('/validate-claimant-account/{email}', [DemandeurAuthenticate::class, 
 Route::post('/validate-claimant-account/{email}', [DemandeurAuthenticate::class, 'submitDefineAccess'])->name('demandeur.validate');
 Route::get('/validate-agent-account/{email}', [AuthenticateAgent::class, 'defineAccess']);
 Route::post('/validate-agent-account/{email}', [AuthenticateAgent::class, 'submitDefineAccess'])->name('agent.validate');
+Route::get('/validate-personal-account/{email}', [PersonalAuthenticate::class, 'defineAccess']);
+Route::post('/validate-personal-account/{email}', [PersonalAuthenticate::class, 'submitDefineAccess'])->name('personal.validate');

@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Personal;
 
 use App\Http\Controllers\Controller;
 use App\Models\PersonneDemande;
+use App\Models\ResetCodePasswordPersonnel;
+use App\Notifications\SendEmailToPersonalAfterRegistrationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use PDF;
 
 class PersonalController extends Controller
@@ -155,6 +159,20 @@ public function store(Request $request)
         }
 
         $personnel->save();
+
+        // Envoi de l'e-mail de vérification
+            ResetCodePasswordPersonnel::where('email', $personnel->email)->delete();
+            $code1 = rand(1000, 4000);
+            $code = $code1 . '' . $personnel->id;
+
+            ResetCodePasswordPersonnel::create([
+                'code' => $code,
+                'email' => $personnel->email,
+            ]);
+
+            Notification::route('mail', $personnel->email)
+                ->notify(new SendEmailToPersonalAfterRegistrationNotification($code, $personnel->email));
+            DB::commit();
 
         // Générer le QR Code avec la méthode qui fonctionne
         $qrPath = $this->generatePermanentQrCode($codeAcces, $personnel);

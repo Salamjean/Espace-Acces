@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+@extends('permanent-personnel.layouts.template')
+@section('content')
     <title>Carte d'Accès - {{ $personnel->prenom }} {{ $personnel->name }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -11,13 +9,32 @@
             body { margin: 0; padding: 0; }
             .no-print { display: none !important; }
             .card-container { box-shadow: none !important; margin: 0 !important; }
+            .cards-side-by-side { 
+                display: flex !important; 
+                gap: 10mm !important;
+                justify-content: center !important;
+                align-items: flex-start !important;
+                page-break-inside: avoid !important;
+            }
             .page-break { page-break-before: always; }
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
             min-height: 100vh;
+            background-color: #e9eaef
+
+        }
+        
+        .cards-side-by-side {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: 1200px;
+            margin-top:50px
         }
         
         .card-container {
@@ -28,8 +45,8 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             overflow: hidden;
             position: relative;
-            margin: 0 auto;
             border: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
         }
         
         .card-front {
@@ -93,12 +110,12 @@
         .header .subtitle {
             font-size: 11px;
             opacity: 0.9;
-            margin-top: 8px;
+            margin-top: 5px;
             font-weight: 300;
             letter-spacing: 1px;
         }
         
-       .photo-section {
+        .photo-section {
             text-align: center;
             margin-bottom: 5px;
             margin-top: 5px;
@@ -242,7 +259,7 @@
         .watermark {
             position: absolute;
             bottom: 15px;
-            right: 140px;
+            right: 15px;
             font-size: 9px;
             opacity: 0.7;
             z-index: 2;
@@ -380,48 +397,90 @@
             transform: translateY(-5px);
             box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
+
+        .controls-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
+    <!-- Contrôles d'impression et navigation -->
+    {{-- <div class="controls-container no-print">
+        <div class="btn-group-custom">
+            <button onclick="window.print()" class="btn btn-primary btn-custom">
+                <i class="bi bi-printer me-2"></i>Imprimer les deux côtés
+            </button>
+            <a href="{{ route('download-card') }}" class="btn btn-success btn-custom">
+                <i class="bi bi-download me-2"></i>Télécharger PDF
+            </a>
+            <a href="{{ route('personal.dashboard') }}" class="btn btn-secondary btn-custom">
+                <i class="bi bi-arrow-left me-2"></i>Retour au tableau de bord
+            </a>
+            <button onclick="toggleDebug()" class="btn btn-warning btn-custom">
+                <i class="bi bi-bug me-2"></i>Debug
+            </button>
+        </div>
+    </div> --}}
+
     <!-- Debug info (à masquer en production) -->
     <div class="debug-info no-print" id="debugInfo">
         <strong>Debug Information:</strong><br>
         Profile Picture: {{ $personnel->profile_picture }}<br>
         QR Code Path: {{ $personnel->path_qr_code }}<br>
-        Storage URL: {{ Storage::url('test') }}
+        Storage URL: {{ Storage::url('test') }}<br>
+        Date Début: {{ $personnel->date_debut_permanent }}<br>
+        Date Fin: {{ $personnel->date_fin_permanent }}
     </div>
 
-    <div class="no-print text-center mb-4">
-        <button onclick="window.print()" class="btn btn-primary me-2">
-            <i class="bi bi-printer me-2"></i>Imprimer
-        </button>
-        <a href="{{ route('admin.permanent-personnel.download-card', $personnel->id) }}" class="btn btn-success">
-            <i class="bi bi-download me-2"></i>Télécharger PDF
-        </a>
-        <a href="{{ route('admin.permanent-personnel.index') }}" class="btn btn-secondary ms-2">
-            <i class="bi bi-arrow-left me-2"></i>Retour
-        </a>
-    </div>
-
-    <!-- Recto de la carte -->
-    <div class="card-container">
-        <div class="card-front">
-            <div class="photo-id">
-                ID: {{ $personnel->code_acces }}
-            </div>
-            
-            <div class="badge">
-                ACTIF
-            </div>
-            
-            <div class="header">
-                <h1>CARTE D'ACCÈS</h1>
-                <div class="subtitle">PERSONNEL PERMANENT AUTORISÉ</div>
-            </div>
-            
-            <div class="photo-section">
-                <div class="profile-photo">
-                    @if($personnel->profile_picture)
+    <!-- Conteneur pour les deux cartes côte à côte -->
+    <div class="cards-side-by-side">
+        <!-- Recto de la carte -->
+        <div class="card-container">
+            <div class="card-front">
+                <div class="photo-id">
+                    ID: {{ $personnel->code_acces }}
+                </div>
+                
+                <div class="badge">
+                    ACTIF
+                </div>
+                
+                <div class="header">
+                    <h1>CARTE D'ACCÈS</h1>
+                    <div class="subtitle">PERSONNEL PERMANENT AUTORISÉ</div>
+                </div>
+                
+                <div class="photo-section">
+                    <div class="profile-photo">
+                         @if($personnel->profile_picture)
                         <img src="{{ asset('storage/' . $personnel->profile_picture) }}" 
                              alt="Photo de profil de {{ $personnel->prenom }} {{ $personnel->name }}"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -433,70 +492,70 @@
                             <i class="bi bi-person-fill"></i>
                         </div>
                     @endif
+                    </div>
                 </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-row">
-                    <span class="info-label">NOM:</span>
-                    <span class="info-value">{{ strtoupper($personnel->name) }}</span>
+                
+                <div class="info-section">
+                    <div class="info-row">
+                        <span class="info-label">NOM:</span>
+                        <span class="info-value">{{ strtoupper($personnel->name) }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">PRÉNOM:</span>
+                        <span class="info-value">{{ ucfirst($personnel->prenom) }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">FONCTION:</span>
+                        <span class="info-value">{{ $personnel->fonction }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">STRUCTURE:</span>
+                        <span class="info-value">{{ $personnel->structure }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">CONTACT:</span>
+                        <span class="info-value">{{ $personnel->contact }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">N° PIÈCE:</span>
+                        <span class="info-value">{{ $personnel->numero_piece }}</span>
+                    </div>
                 </div>
-                <div class="info-row">
-                    <span class="info-label">PRÉNOM:</span>
-                    <span class="info-value">{{ ucfirst($personnel->prenom) }}</span>
+                
+                <div class="validity text-center">
+                    <strong>VALIDE DU:</strong> {{ $personnel->date_debut_permanent }} 
+                    <strong>AU:</strong> {{ $personnel->date_fin_permanent }}
                 </div>
-                <div class="info-row">
-                    <span class="info-label">FONCTION:</span>
-                    <span class="info-value">{{ $personnel->fonction }}</span>
+                
+                <div class="signature-section">
+                    <div class="signature-line"></div>
+                    <div>Signature du titulaire</div>
                 </div>
-                <div class="info-row">
-                    <span class="info-label">STRUCTURE:</span>
-                    <span class="info-value">{{ $personnel->structure }}</span>
+                
+                <div class="watermark text-center">
+                    Généré le: {{ now()->format('d/m/Y H:i') }}
                 </div>
-                <div class="info-row">
-                    <span class="info-label">CONTACT:</span>
-                    <span class="info-value">{{ $personnel->contact }}</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">N° PIÈCE:</span>
-                    <span class="info-value">{{ $personnel->numero_piece }}</span>
-                </div>
-            </div>
-            
-            <div class="validity text-center">
-                <strong>VALIDE DU:</strong> {{ $personnel->date_debut_permanent }} 
-                <strong>AU:</strong> {{ $personnel->date_fin_permanent }}
-            </div>
-            
-            <div class="signature-section">
-                <div class="signature-line"></div>
-                <div>Signature du titulaire</div>
-            </div>
-            
-            <div class="watermark text-center">
-                Généré le: {{ now()->format('d/m/Y H:i') }}
             </div>
         </div>
-    </div>
 
-    <div class="text-center my-4 no-print">
-        <i class="bi bi-arrow-down text-white" style="font-size: 2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></i>
-    </div>
+        <div class="text-center my-4 no-print">
+            <i class="bi bi-arrow-right text-white" style="font-size: 2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></i>
+        </div>
 
-    <!-- Verso de la carte -->
-    <div class="card-container">
-        <div class="card-back">
-            <div class="logo">
-                <i class="bi bi-shield-check logo-icon"></i>
-            </div>
-            
-            <div class="back-header">
-                <h2>CODE D'ACCÈS QR</h2>
-            </div>
-            
-            <div class="qr-section">
-                <div class="qr-code">
-                    @if($personnel->path_qr_code)
+        <!-- Verso de la carte -->
+        <div class="card-container">
+            <div class="card-back">
+                <div class="logo">
+                    <i class="bi bi-shield-check logo-icon"></i>
+                </div>
+                
+                <div class="back-header">
+                    <h2>CODE D'ACCÈS QR</h2>
+                </div>
+                
+                <div class="qr-section">
+                    <div class="qr-code">
+                         @if($personnel->path_qr_code)
                         <img src="{{ asset('storage/' . $personnel->path_qr_code) }}" 
                              alt="QR Code d'accès {{ $personnel->code_acces }}"
                              onerror="this.style.display='none';">
@@ -508,28 +567,29 @@
                             QR CODE: {{ $personnel->code_acces }}
                         </div>
                     @endif
+                    </div>
+                    <div style="margin-top: 12px; font-size: 11px; color: #2c3e50; font-weight: 800; letter-spacing: 1px;">
+                        {{ $personnel->code_acces }}
+                    </div>
                 </div>
-                <div style="margin-top: 12px; font-size: 11px; color: #2c3e50; font-weight: 800; letter-spacing: 1px;">
+                
+                <div class="barcode">
                     {{ $personnel->code_acces }}
                 </div>
-            </div>
-            
-            <div class="barcode">
-                {{ $personnel->code_acces }}
-            </div>
-            
-            <div class="instructions">
-                <strong>INSTRUCTIONS D'UTILISATION:</strong><br>
-                • Présentez cette carte à l'entrée<br>
-                • Scanner le QR code pour enregistrement<br>
-                • Conservez cette carte en lieu sûr<br>
-                • Signalez immédiatement toute perte
-            </div>
-            
-            <div class="contact-info">
-                <strong>EN CAS DE PERTE:</strong><br>
-                Contactez l'administration • +225 07 11 11 79 79<br>
-                Email: info@example.com
+                
+                <div class="instructions">
+                    <strong>INSTRUCTIONS D'UTILISATION:</strong><br>
+                    • Présentez cette carte à l'entrée<br>
+                    • Scanner le QR code pour enregistrement<br>
+                    • Conservez cette carte en lieu sûr<br>
+                    • Signalez immédiatement toute perte
+                </div>
+                
+                <div class="contact-info">
+                    <strong>EN CAS DE PERTE:</strong><br>
+                    Contactez l'administration • +225 07 11 11 79 79<br>
+                    Email: info@example.com
+                </div>
             </div>
         </div>
     </div>
@@ -578,3 +638,4 @@
     </script>
 </body>
 </html>
+@endsection

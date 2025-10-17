@@ -305,7 +305,6 @@
                             </div>
                         </div>
 
-                       <!-- Step 4: Validation -->
                         <!-- Step 4: Validation -->
 <div class="step-content d-none" id="step4">
     <h5 class="mb-4" style="color: #193561; border-bottom: 2px solid #193561; padding-bottom: 10px;">
@@ -320,12 +319,12 @@
     <!-- SYSTÈME "ADD TO" pour les personnes permanentes -->
     <div class="card mb-4" style="border: 2px solid #193561; border-radius: 10px;">
         <div class="card-header" style="background: #193561; color: white;">
-            <h6 class="mb-0"><i class="bi bi-person-plus me-2"></i>Personnes Permanentes Associées</h6>
+            <h6 class="mb-0"><i class="bi bi-person-plus me-2"></i>Technicien Associés</h6>
         </div>
         <div class="card-body">
             <div class="mb-3">
                 <label class="form-label fw-bold" style="color: #193561;">
-                    <i class="bi bi-person-check me-1"></i>Ajouter des personnes permanentes
+                    <i class="bi bi-person-check me-1"></i>Ajouter des Techniciens
                 </label>
                 
                 <!-- Sélecteur et bouton d'ajout -->
@@ -333,7 +332,7 @@
                     <div class="col-md-8">
                         <select class="form-control" id="select_permanente" 
                                 style="border: 2px solid #193561; border-radius: 8px;">
-                            <option value="">-- Sélectionnez une personne permanente --</option>
+                            <option value="">-- Sélectionnez un Technicien --</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -347,7 +346,7 @@
                 <!-- Liste des personnes ajoutées -->
                 <div class="mt-3">
                     <label class="form-label fw-bold" style="color: #193561;">
-                        <i class="bi bi-list-check me-1"></i>Personnes sélectionnées
+                        <i class="bi bi-list-check me-1"></i>Techniciens sélectionnées
                     </label>
                     <div id="liste_personnes_ajoutees" class="border rounded p-3" 
                          style="min-height: 60px; background: #f8f9fa; border-color: #193561 !important;">
@@ -845,7 +844,7 @@ function loadPersonnesPermanentes() {
             select.empty();
             
             if (response.success && response.personnes && response.personnes.length > 0) {
-                select.append('<option value="">-- Sélectionnez une personne permanente --</option>');
+                select.append('<option value="">-- Sélectionnez un technicien --</option>');
                 
                 // Trier les personnes par nom pour une meilleure lisibilité
                 response.personnes.sort((a, b) => {
@@ -871,7 +870,7 @@ function loadPersonnesPermanentes() {
                     console.log('Debug serveur:', response.debug);
                 }
             } else {
-                let message = 'Aucune personne permanente disponible';
+                let message = 'Aucun technicien disponible';
                 if (response.message) {
                     message = response.message;
                 }
@@ -1000,6 +999,21 @@ function displayVisitorInfo(data) {
         $('#display_date_visite').val('Non renseigné');
     }
 }
+
+$(document).ready(function() {
+    // Mettre le focus sur le champ d'entrée manuelle
+    $('#manualCodeInput').focus();
+
+    // Sélectionner le texte quand le champ est focalisé
+    $('#manualCodeInput').on('focus', function() {
+        $(this).select();
+    });
+
+    // Remettre le focus sur le champ si l'utilisateur clique ailleurs
+    $('#manualCodeInput').on('blur', function() {
+        $(this).focus();
+    });
+});
 
 // Fonction pour mettre à jour le récapitulatif
 function updateRecap() {
