@@ -98,7 +98,7 @@
             letter-spacing: 1px;
         }
         
-       .photo-section {
+         .photo-section {
             text-align: center;
             margin-bottom: 5px;
             margin-top: 5px;
@@ -347,7 +347,6 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #28a745, #28a745);
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -410,10 +409,10 @@
                 ID: {{ $personnel->code_acces }}
             </div>
             
-            <div class="badge">
-                ACTIF
+            <div class="badge {{ $personnel->statut == 'approuve' ? 'bg-success' : 'bg-danger' }}">
+                {{ $personnel->statut == 'approuve' ? 'ACTIF' : 'INACTIF' }}
             </div>
-            
+
             <div class="header">
                 <h1>CARTE D'ACCÈS</h1>
                 <div class="subtitle">PERSONNEL PERMANENT AUTORISÉ</div>

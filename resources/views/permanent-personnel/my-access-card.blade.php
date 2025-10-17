@@ -364,7 +364,6 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #28a745, #28a745);
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
@@ -469,8 +468,8 @@
                     ID: {{ $personnel->code_acces }}
                 </div>
                 
-                <div class="badge">
-                    ACTIF
+                <div class="badge {{ $personnel->statut == 'approuve' ? 'bg-success' : 'bg-danger' }}">
+                    {{ $personnel->statut == 'approuve' ? 'ACTIF' : 'INACTIF' }}
                 </div>
                 
                 <div class="header">
