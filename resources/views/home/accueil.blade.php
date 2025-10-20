@@ -124,7 +124,7 @@
                 pour autoriser l’accès à la salle du datacenter. 
                 Nos équipes sont disponibles pour garantir la continuité des services et la sécurité des infrastructures.
             </p>
-            <a class="cta-btn" href="#demande-acces">Faire une demande d’accès</a>
+            <a class="cta-btn" href="{{route('pages.access')}}">Faire une demande d’accès</a>
             </div>
         </div>
         </div>
