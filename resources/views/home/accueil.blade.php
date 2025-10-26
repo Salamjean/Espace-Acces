@@ -33,17 +33,17 @@
         </div><!-- End Carousel Item -->
 
         <div class="carousel-item">
-          <img src="{{asset('assets/assets/img/presentaentre.jpg')}}" alt="">
+          <img src="{{asset('assets/assets/img/sante.jpg')}}" alt="Campagne de santé publique">
           <div class="container">
-            <h2>La DIEMP, au cœur de l’innovation numérique</h2>
-            <p>
-            La Direction de l’Informatique, de l’Équipement et de la Maintenance du Patrimoine (DIEMP) met à disposition un datacenter moderne et hautement sécurisé, 
-            conçu pour soutenir les besoins technologiques des institutions publiques et partenaires. 
-            Grâce à ses infrastructures de pointe, la DIEMP garantit performance, fiabilité et souveraineté numérique.
-            </p>
-            <a href="#about" class="btn-get-started">En savoir plus</a>
+              <h2>Ministère de la Santé - Votre santé, notre priorité</h2>
+              <p>
+                  Le Ministère de la Santé œuvre quotidiennement pour protéger la santé de tous les citoyens. 
+                  À travers des campagnes de prévention, un système de santé robuste et des actions ciblées, 
+                  nous nous engageons pour votre bien-être et celui de vos proches.
+              </p>
+              <a href="#campagnes-sante" class="btn-get-started">Découvrir nos actions</a>
           </div>
-        </div><!-- End Carousel Item -->
+      </div><!-- End Carousel Item -->
 
         <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
