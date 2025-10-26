@@ -39,7 +39,7 @@
               <p>
                   Le Ministère de la Santé œuvre quotidiennement pour protéger la santé de tous les citoyens. 
                   À travers des campagnes de prévention, un système de santé robuste et des actions ciblées, 
-                  nous nous engageons pour votre bien-être et celui de vos proches.
+                  nous nous engageons pour votre bien-être et celui de vos proches et amis.
               </p>
               <a href="#campagnes-sante" class="btn-get-started">Découvrir nos actions</a>
           </div>
