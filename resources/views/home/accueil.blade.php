@@ -33,15 +33,17 @@
         </div><!-- End Carousel Item -->
 
         <div class="carousel-item">
-          <img src="{{asset('assets/assets/img/sante.jpg')}}" alt="Campagne de santé publique">
+          <img src="{{asset('assets/assets/img/55.jpg')}}" alt="">
           <div class="container">
-              <h2>Ministère de la Santé - Votre santé, notre priorité</h2>
+              <h2>Un datacenter souverain au service de la santé publique</h2>
               <p>
-                  Le Ministère de la Santé œuvre quotidiennement pour protéger la santé de tous les citoyens. 
-                  À travers des campagnes de prévention, un système de santé robuste et des actions ciblées, 
-                  nous nous engageons pour votre bien-être et celui de vos proches et amis.
+                  Le Ministère de la Santé s'appuie sur les infrastructures de la <strong>Direction de l'Informatique, 
+                  de l'Équipement et de la Maintenance du Patrimoine (DIEMP)</strong> pour héberger et sécuriser 
+                  ses données de santé stratégiques. Ce datacenter moderne, performant et hautement sécurisé, 
+                  garantit la <strong>protection des données sensibles</strong> et assure la continuité des services 
+                  numériques essentiels à notre système de santé.
               </p>
-              <a href="#campagnes-sante" class="btn-get-started">Découvrir nos actions</a>
+              <a href="#about" class="btn-get-started">En savoir plus</a>
           </div>
       </div><!-- End Carousel Item -->
 
