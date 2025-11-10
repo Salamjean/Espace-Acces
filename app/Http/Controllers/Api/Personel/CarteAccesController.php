@@ -15,33 +15,35 @@ class CarteAccesController extends Controller
      */
     public function showMyCard()
     {
-        // Récupérer le personnel connecté - CORRECTION DU GUARD
+        // Récupérer le personnel connecté
         $personnel = Auth::guard('sanctum')->user();
         
         // Vérifier si l'utilisateur est authentifié
         if (!$personnel) {
             return response()->json([
-                'error' => 'Non authentifié.'
+                'success' => false,
+                'message' => 'Non authentifié.'
             ], 401);
         }
         
         // Vérifier que l'utilisateur est bien un personnel permanent
         if (!$personnel->est_permanent) {
             return response()->json([
-                'error' => 'Accès non autorisé. Réservé au personnel permanent.'
+                'success' => false,
+                'message' => 'Accès non autorisé. Réservé au personnel permanent.'
             ], 403);
         }
         
-        // Construire les URLs complètes pour les images
+        // Construire les chemins relatifs pour les images
         $profilePictureUrl = null;
         $qrCodeUrl = null;
         
         if ($personnel->profile_picture && Storage::disk('public')->exists($personnel->profile_picture)) {
-            $profilePictureUrl = Storage::disk('public')->url($personnel->profile_picture);
+            $profilePictureUrl = '/storage/' . $personnel->profile_picture;
         }
         
         if ($personnel->path_qr_code && Storage::disk('public')->exists($personnel->path_qr_code)) {
-            $qrCodeUrl = Storage::disk('public')->url($personnel->path_qr_code);
+            $qrCodeUrl = '/storage/' . $personnel->path_qr_code;
         }
         
         return response()->json([
@@ -65,19 +67,21 @@ class CarteAccesController extends Controller
      */
     public function downloadMyCard()
     {
-        // Récupérer le personnel connecté - CORRECTION DU GUARD
+        // Récupérer le personnel connecté
         $personnel = Auth::guard('sanctum')->user();
         
         // Vérifier si l'utilisateur est authentifié
         if (!$personnel) {
             return response()->json([
-                'error' => 'Non authentifié.'
+                'success' => false,
+                'message' => 'Non authentifié.'
             ], 401);
         }
         
         if (!$personnel->est_permanent) {
             return response()->json([
-                'error' => 'Accès non autorisé. Réservé au personnel permanent.'
+                'success' => false,
+                'message' => 'Accès non autorisé. Réservé au personnel permanent.'
             ], 403);
         }
         
